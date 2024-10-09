@@ -65,7 +65,7 @@ class UserController extends Controller
     {
         $user = User::query()->findOrFail($id);
 
-        $update = $user->update([
+        $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,

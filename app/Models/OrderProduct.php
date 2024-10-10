@@ -9,4 +9,9 @@ class OrderProduct extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderProductFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'product_id',
+        'order_id',
+    ];
 }

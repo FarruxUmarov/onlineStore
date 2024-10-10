@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -91,5 +92,16 @@ class ProductController extends Controller
             'status' => 'success',
             'token' => $product,
         ]);
+    }
+
+    public function showByCategory(string $id): ProductCollection
+    {
+        $products = Product::query()
+            ->where('category_id', $id)
+            ->with("category")
+            ->get();
+
+        return new ProductCollection($products);
+
     }
 }

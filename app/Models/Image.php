@@ -13,4 +13,9 @@ class Image extends Model
         'name',
         'product_id',
     ];
+
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

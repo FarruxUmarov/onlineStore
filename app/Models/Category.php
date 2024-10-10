@@ -15,4 +15,9 @@ class Category extends Model
         'image',
         'parent_id',
     ];
+
+   public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+   {
+       return $this->hasMany(Product::class);
+   }
 }

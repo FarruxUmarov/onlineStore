@@ -8,6 +8,8 @@ use App\Http\Controllers\api\OrderProductController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\CartController;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +26,5 @@ Route::resource('/comments', CommentController::class)->middleware('auth:sanctum
 Route::resource('/carts', CartController::class)->middleware('auth:sanctum');
 Route::resource('/orders', OrderController::class)->middleware('auth:sanctum');
 Route::resource('/order_products', OrderProductController::class)->middleware('auth:sanctum');
+
+Route::get('/categories/{category}/products', [ProductController::class, 'showByCategory'])->middleware('auth:sanctum');

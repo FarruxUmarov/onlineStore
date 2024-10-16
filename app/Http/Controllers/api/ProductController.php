@@ -31,6 +31,14 @@ class ProductController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|integer|exists:categories,id',
+        ]);
+
+
         $product = Product::query()->create([
             'name' => $request->name,
             'description' => $request->description,
@@ -41,8 +49,8 @@ class ProductController extends Controller
         return response()->json([
             'message' => 'Product created successfully',
             'status' => 'success',
-            'token' => $product,
-        ]);
+            'token' => $product
+        ], 201);
     }
 
     /**

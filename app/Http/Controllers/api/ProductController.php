@@ -74,6 +74,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|integer|exists:categories,id',
+        ]);
+
         $category = Product::query()->findOrFail($id);
         $category->update([
             'name' => $request->name,
@@ -93,13 +100,14 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
+
         $product = Product::query()->findOrFail($id);
         $product->delete();
         return response()->json([
             'message' => 'Product deleted successfully',
             'status' => 'success',
             'token' => $product,
-        ]);
+        ], 204);
     }
 
     public function showByCategory(string $id): ProductCollection

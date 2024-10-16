@@ -87,32 +87,32 @@ class ProductControllerTest extends TestCase
             ->assertJsonFragment(['name' => 'Updated Product']);
     }
 
-//    public function test_update_fails_with_invalid_data()
-//    {
-//        $product = Product::factory()->create();
-//
-//        $response = $this->putJson("/api/products/{$product->id}", [
-//            'name_' => '' // Invalid name
-//        ]);
-//
-//        $response->assertStatus(422)
-//            ->assertJsonValidationErrors('name');
-//    }
+    public function test_update_fails_with_invalid_data()
+    {
+        $product = Product::factory()->create();
 
-//    public function test_destroy_removes_product()
-//    {
-//        $product = Product::factory()->create();
-//
-//        $response = $this->deleteJson("/api/products/{$product->id}");
-//
-//        $response->assertStatus(204);
-//        $this->assertDatabaseMissing('products', ['id' => $product->id]);
-//    }
+        $response = $this->putJson("/api/products/$product->id", [
+            'name' => '', // Invalid name
+        ]);
 
-//    public function test_destroy_fails_for_nonexistent_product()
-//    {
-//        $response = $this->deleteJson('/api/categories/999');
-//
-//        $response->assertStatus(404);
-//    }
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors('name');
+    }
+
+    public function test_destroy_removes_product()
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->deleteJson("/api/products/{$product->id}");
+
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('products', ['id' => $product->id]);
+    }
+
+    public function test_destroy_fails_for_nonexistent_product()
+    {
+        $response = $this->deleteJson('/api/categories/999');
+
+        $response->assertStatus(404);
+    }
 }

@@ -20,7 +20,7 @@ Route::get('/user', function (Request $request) {
 
 Route::resource('/users', UserController::class)->middleware('auth:sanctum');
 Route::resource('/products', ProductController::class);
-Route::resource('/categories', CategoryController::class)->middleware('auth:sanctum');
+Route::resource('/categories', CategoryController::class);
 Route::resource('/images', ImageController::class)->middleware('auth:sanctum');
 Route::resource('/comments', CommentController::class)->middleware('auth:sanctum');
 Route::resource('/carts', CartController::class)->middleware('auth:sanctum');

@@ -31,6 +31,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'image' => 'required|string|max:255',
+            'parent_id' => 'required|integer|exists:categories,id'
+        ]);
+
+
         $category = Category::query()->create([
             'name' => $request->name,
             'description' => $request->description,
@@ -42,7 +50,7 @@ class CategoryController extends Controller
             'message' => 'Category created successfully',
             'status_code' => 'success',
             'token' => $category
-        ]);
+        ], 201);
     }
 
     /**
@@ -67,6 +75,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'image' => 'required|string|max:255',
+            'parent_id' => 'required|integer|exists:categories,id'
+        ]);
+
         $category = Category::query()->findOrFail($id);
         $category->update([
             'name' => $request->name,
@@ -92,6 +107,6 @@ class CategoryController extends Controller
             'message' => 'Category deleted successfully',
             'status_code' => 'success',
             'token' => $category
-        ]);
+        ], 204);
     }
 }
